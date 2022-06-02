@@ -35,8 +35,21 @@
             margin: 200px auto;
         }
 
+        .box{
+                width: 200px;
+                height: 200px;   
+                background-color: gold;
+                margin: auto;
+                transition-duration: 1s;
+            }
+
         .active{
             background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .round{
+            transform: scale(2);
+            border-radius: 50%;
         }
 
     </style>
@@ -54,6 +67,7 @@
         <header></header>
 
         <div class="container"></div>
+        <div class="box"></div>
 
     </div>
     <!-- wrap end -->
@@ -67,10 +81,13 @@
             // 2. pageYOffset으로 스크롤 값 가져오기
             // 3. 이벤트 적용할 엘리먼트 파악 및 선택
             // 4. 이벤트 적용
-
-            const handleScroll = () =>{
             const header = document.querySelector('header')
+            const conEl = document.querySelector('.container')
+            const boxEl = document.querySelector('.box')
 
+
+            const handleScrollHeader = () =>{
+            
                 const  sct = window.pageYOffset
 
                 header.innerHTML = sct
@@ -79,11 +96,23 @@
                     header.classList.add('active')
                 }else{
                     header.classList.remove('active')
-                // }
+                }
 
             } 
 
-            window.addEventListener('scroll', handleScroll)
+            const handleScrollBox = () =>{
+                const conTop = conEl.getBoundingClientRect().top
+
+                // *컨테이너가 top에 도달하였을 때 box가 둥글게 변경
+                if(conTop < 0){
+                    boxEl.classList.add('round')
+                }else{
+                    boxEl.classList.remove('round')
+                }
+            } 
+
+            window.addEventListener('scroll', handleScrollHeader)
+            window.addEventListener('scroll', handleScrollBox)
 
         })()
 
